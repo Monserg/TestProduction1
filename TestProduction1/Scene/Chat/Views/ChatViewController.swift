@@ -13,7 +13,16 @@ class ChatViewController: UIViewController {
 
 
     // MARK: - IBOutlets
+    @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet var chatTableHeight: NSLayoutConstraint!
+    @IBOutlet weak var messageViewBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var sendButton: UIButton! {
+        didSet {
+            sendButton.isEnabled = false
+        }
+    }
 
     @IBOutlet weak var chatTableView: UITableView! {
         didSet {
@@ -31,15 +40,30 @@ class ChatViewController: UIViewController {
         super.init(coder: coder)
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
 
     // MARK: - Class functions
+    override func viewWillLayoutSubviews() {
+        super.updateViewConstraints()
+        
+        chatTableHeight?.constant = chatTableView.contentSize.height + 16
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Add Long Tap
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap))
-        longPressGesture.minimumPressDuration = 0.5
-        chatTableView.addGestureRecognizer(longPressGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
+
+        if model.messagesCount > 0 {
+            chatTableView.scrollToRow(at: model.bottomIndexPath, at: .bottom, animated: false)
+        }
+
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
 
@@ -51,25 +75,87 @@ class ChatViewController: UIViewController {
 
         model.send(text)
         messageTextField.text = ""
+        messageTextField.resignFirstResponder()
         chatTableView.reloadData()
+        chatTableView.scrollToRow(at: model.bottomIndexPath, at: .bottom, animated: true)
     }
 
-    @objc func handleLongTap(longPressGesture: UILongPressGestureRecognizer) {
-        guard let indexPath = chatTableView.indexPathForRow(at: longPressGesture.location(in: chatTableView)) else {
-            print("Long press on table view, not row.")
-            return
-        }
+    @IBAction func clearButtonTap(_ sender: UIBarButtonItem) {
+        showAlertView()
+    }
 
-        print("Long press on row at \(indexPath.row)")
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        messageTextField.resignFirstResponder()
+        messageViewBottomConstraint.constant = 0
+        chatTableView.scrollToRow(at: model.bottomIndexPath, at: .bottom, animated: true)
 
-        #warning("ADD ACTION !!!")
+        view.layoutIfNeeded()
+    }
+
+    @objc func keyboardWillChangeFrame(_ notification: Notification) {
+        let beginFrame = ((notification as NSNotification).userInfo![UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let endFrame = ((notification as NSNotification).userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let delta = (endFrame.origin.y - beginFrame.origin.y)
+        
+        chatTableView.contentOffset = CGPoint(x: 0, y: chatTableView.contentOffset.y - delta)
+        messageViewBottomConstraint.constant = view.bounds.height - endFrame.origin.y
+
+        view.layoutIfNeeded()
+    }
+
+    // MARK: - Custom functions
+    private func showAlertView() {
+        let alert = UIAlertController(title: "Info", message: "Are you ready ?", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.model.clearChat()
+            self.chatTableView.reloadData()
+        }))
+
+        alert.addAction(UIAlertAction(title: "No", style: .destructive, handler: { _ in }))
+
+        present(alert, animated: true, completion: nil)
+    }
+
+    private func setupEmptyLabel() {
+        emptyLabel.isHidden = model.messagesCount > 0
     }
 }
 
 
 // MARK: - UITextFieldDelegate
 extension ChatViewController: UITextFieldDelegate {
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        sendButton.isEnabled = false
+
+        return true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let count = textField.text?.count {
+            switch count {
+            case let y where y == 0 && !string.isEmpty:
+                sendButton.isEnabled = true
+
+            case let x where x == 1 && string.isEmpty:
+                sendButton.isEnabled = false
+
+            default:
+                sendButton.isEnabled = true
+            }
+        }
+
+        return true
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let length = textField.text?.count, length > 0 else {
+            return false
+        }
+
+        textField.resignFirstResponder()
+        sendButton.isEnabled = true
+
         return true
     }
 }
@@ -78,6 +164,8 @@ extension ChatViewController: UITextFieldDelegate {
 // MARK: - UITableViewDataSource
 extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        setupEmptyLabel()
+        
         return model.messagesCount
     }
 
@@ -95,6 +183,10 @@ extension ChatViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ChatViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        viewWillLayoutSubviews()
+    }
+
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let message = model.getMessage(by: indexPath)
 

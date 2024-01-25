@@ -10,10 +10,12 @@ import Foundation
 protocol ChatViewModelProtocol {
     var chat: [Message] { get set }
     var messagesCount: Int { get }
+    var bottomIndexPath: IndexPath { get }
 
     func send(_ text: String)
     func loadChat() -> [Message]
     func getMessage(by index: IndexPath) -> Message
+    func clearChat()
 }
 
 class ChatViewModel: ChatViewModelProtocol {
@@ -24,7 +26,12 @@ class ChatViewModel: ChatViewModelProtocol {
         chat.count
     }
 
+    var bottomIndexPath: IndexPath {
+        let row = messagesCount == 0 ? messagesCount : messagesCount - 1
+        return IndexPath(row: row, section: 0)
+    }
 
+    
     // MARK: - Initialization
     init() {
         self.chat = loadChat()
@@ -65,5 +72,13 @@ class ChatViewModel: ChatViewModelProtocol {
 
     func getMessage(by index: IndexPath) -> Message {
         chat[index.row]
+    }
+
+    func clearChat() {
+        chat = []
+
+        Task {
+            await saveChat()
+        }
     }
 }

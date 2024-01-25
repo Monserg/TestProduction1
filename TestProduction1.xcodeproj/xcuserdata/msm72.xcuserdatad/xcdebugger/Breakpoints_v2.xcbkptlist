@@ -36,53 +36,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9E9BD172-A33D-473F-9AC1-1E7620411DBB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TestProduction1/Scene/Chat/Views/ChatViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "loadChat()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9E9BD172-A33D-473F-9AC1-1E7620411DBB - ea82d4b527f43111"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TestProduction1.ChatViewModel.loadChat() -&gt; Swift.Array&lt;TestProduction1.Message&gt;"
-                  moduleName = "TestProduction1"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/SSD-G-DRIVE/My%20Projects/Production1/TestProduction1/TestProduction1/Scene/Chat/Views/ChatViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "60"
-                  endingLineNumber = "60"
-                  offsetFromSymbolStart = "947">
-               </Location>
-               <Location
-                  uuid = "9E9BD172-A33D-473F-9AC1-1E7620411DBB - ea82d4b527f43111"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TestProduction1.ChatViewModel.loadChat() -&gt; Swift.Array&lt;TestProduction1.Message&gt;"
-                  moduleName = "TestProduction1"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Volumes/SSD-G-DRIVE/My%20Projects/Production1/TestProduction1/TestProduction1/Scene/Chat/Views/ChatViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "60"
-                  endingLineNumber = "60"
-                  offsetFromSymbolStart = "1076">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

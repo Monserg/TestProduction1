@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,9 +16,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat is empty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dV7-oL-5Ai" userLabel="Empty Label">
+                                <rect key="frame" x="137.33333333333334" y="415.33333333333331" width="118.66666666666666" height="21.666666666666686"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Pug-Ei-ddq" userLabel="Chat Table View">
-                                <rect key="frame" x="0.0" y="103" width="393" height="659"/>
+                                <rect key="frame" x="0.0" y="518" width="393" height="244"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="750" constant="244" id="azX-J3-UhB"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="VCX-lM-7ML">
                                         <rect key="frame" x="0.0" y="50" width="393" height="44"/>
@@ -38,11 +46,11 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQt-VS-inI" userLabel="Message Send View">
                                 <rect key="frame" x="0.0" y="762" width="393" height="90"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ECQ-S1-HY5" userLabel="Message Send Stack View">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ECQ-S1-HY5" userLabel="Message Send Stack View">
                                         <rect key="frame" x="20" y="20" width="353" height="44"/>
                                         <subviews>
                                             <textField clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Message" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="UNF-75-at6" userLabel="Message Round Style Text Field">
-                                                <rect key="frame" x="0.0" y="0.0" width="257" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="249" height="44"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="systemBlueColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -83,17 +91,29 @@
                         <constraints>
                             <constraint firstItem="aQt-VS-inI" firstAttribute="top" secondItem="Pug-Ei-ddq" secondAttribute="bottom" id="3Ie-Wg-W9F"/>
                             <constraint firstItem="Pug-Ei-ddq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7P3-GK-wf6"/>
+                            <constraint firstItem="Pug-Ei-ddq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" id="GpU-qx-cVn"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aQt-VS-inI" secondAttribute="trailing" id="Ta6-Rg-I7B"/>
                             <constraint firstAttribute="bottom" secondItem="aQt-VS-inI" secondAttribute="bottom" id="UVy-zY-yZG"/>
-                            <constraint firstItem="Pug-Ei-ddq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="V8e-1p-r8F"/>
+                            <constraint firstItem="dV7-oL-5Ai" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="UiU-yL-OJo"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Pug-Ei-ddq" secondAttribute="trailing" id="ZM1-0I-ts9"/>
                             <constraint firstItem="aQt-VS-inI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="n4B-gZ-FVm"/>
+                            <constraint firstItem="dV7-oL-5Ai" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vsx-hL-hIz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Chat" id="du0-N4-tGa"/>
+                    <navigationItem key="navigationItem" title="Chat" id="du0-N4-tGa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="rud-ja-KJ5" userLabel="Clear Item">
+                            <connections>
+                                <action selector="clearButtonTap:" destination="BYZ-38-t0r" id="Nh8-BQ-Mgv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="chatTableHeight" destination="azX-J3-UhB" id="GV8-lU-sG9"/>
                         <outlet property="chatTableView" destination="Pug-Ei-ddq" id="KNK-iv-7sj"/>
+                        <outlet property="emptyLabel" destination="dV7-oL-5Ai" id="bB9-jm-Y5g"/>
                         <outlet property="messageTextField" destination="UNF-75-at6" id="rMv-mf-5se"/>
+                        <outlet property="messageViewBottomConstraint" destination="UVy-zY-yZG" id="cuf-bG-a80"/>
+                        <outlet property="sendButton" destination="qUF-SC-Qdx" id="5B3-Cl-TGj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
