@@ -12,6 +12,7 @@ protocol ChatViewModelProtocol {
     var messagesCount: Int { get }
     var bottomIndexPath: IndexPath { get }
 
+    func addIncomingMessage()
     func send(_ text: String)
     func loadChat() -> [Message]
     func getMessage(by index: IndexPath) -> Message
@@ -39,6 +40,19 @@ class ChatViewModel: ChatViewModelProtocol {
 
 
     // MARK: - Class functions
+    func addIncomingMessage() {
+        var string = "Otherwise, it’s unclear where the iteration should start. Iterating over a one-sided range requires you to manually check where the loop should end, as it would otherwise continue indefinitely."
+
+        string.removeSubrange(string.startIndex ..< string.index(string.startIndex, offsetBy: Int(arc4random_uniform(20))))
+        let message = Message(text: string, sender: arc4random_uniform(2) == 0 ? .sender1 : .sender2)
+
+        chat.append(message)
+
+        Task {
+            await saveChat()
+        }
+    }
+
     func send(_ text: String) {
         chat.append(Message(text: text))
 

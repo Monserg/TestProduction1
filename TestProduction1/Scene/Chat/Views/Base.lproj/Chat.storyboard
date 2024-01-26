@@ -26,10 +26,18 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="659"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="VCX-lM-7ML">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageInCell" id="VCX-lM-7ML">
                                         <rect key="frame" x="0.0" y="50" width="393" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VCX-lM-7ML" id="V52-v4-yBp">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageOutCell" id="Nid-Z0-Ni0">
+                                        <rect key="frame" x="0.0" y="94" width="393" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Nid-Z0-Ni0" id="eRW-SV-E7z">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
@@ -98,11 +106,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="du0-N4-tGa">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="rud-ja-KJ5" userLabel="Clear Item">
-                            <connections>
-                                <action selector="clearButtonTap:" destination="BYZ-38-t0r" id="Nh8-BQ-Mgv"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="trash" id="rud-ja-KJ5" userLabel="Clear Item">
+                                <connections>
+                                    <action selector="clearButtonTap:" destination="BYZ-38-t0r" id="Nh8-BQ-Mgv"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="add" id="bMw-f6-ZfZ">
+                                <connections>
+                                    <action selector="addButtonTap:" destination="BYZ-38-t0r" id="KV0-gE-f00"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="chatTableView" destination="Pug-Ei-ddq" id="KNK-iv-7sj"/>

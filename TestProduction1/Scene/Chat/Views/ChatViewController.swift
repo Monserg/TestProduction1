@@ -15,7 +15,6 @@ class ChatViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var messageTextField: UITextField!
-    @IBOutlet var chatTableHeight: NSLayoutConstraint!
     @IBOutlet weak var messageViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var sendButton: UIButton! {
@@ -28,7 +27,8 @@ class ChatViewController: UIViewController {
         didSet {
             chatTableView.estimatedRowHeight = 64.0
             chatTableView.rowHeight = UITableView.automaticDimension
-            chatTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "MessageCell")
+            chatTableView.register(UINib(nibName: "MessageInCell", bundle: nil), forCellReuseIdentifier: "MessageInCell")
+            chatTableView.register(UINib(nibName: "MessageOutCell", bundle: nil), forCellReuseIdentifier: "MessageOutCell")
         }
     }
 
@@ -52,12 +52,16 @@ class ChatViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
 
+        NotificationCenter.default
+            .addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         if model.messagesCount > 0 {
             chatTableView.scrollToRow(at: model.bottomIndexPath, at: .bottom, animated: false)
         }
-
-        NotificationCenter.default
-            .addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
 
@@ -70,6 +74,12 @@ class ChatViewController: UIViewController {
         model.send(text)
         messageTextField.text = ""
         messageTextField.resignFirstResponder()
+        chatTableView.reloadData()
+        chatTableView.scrollToRow(at: model.bottomIndexPath, at: .bottom, animated: true)
+    }
+
+    @IBAction func addButtonTap(_ sender: UIBarButtonItem) {
+        model.addIncomingMessage()
         chatTableView.reloadData()
         chatTableView.scrollToRow(at: model.bottomIndexPath, at: .bottom, animated: true)
     }
@@ -164,13 +174,28 @@ extension ChatViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? MessageCell else {
-            return UITableViewCell()
+        let message = model.getMessage(by: indexPath)
+
+        switch message.owned {
+        case false:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "MessageInCell", for: indexPath) as? MessageInCell else {
+                return UITableViewCell()
+            }
+
+            cell.configure(with: message)
+
+            return cell
+
+        default:
+            guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MessageOutCell", for: indexPath) as? MessageOutCell else {
+                return UITableViewCell()
+            }
+
+            cell.configure(with: message)
+
+            return cell
         }
-
-        cell.configure(with: model.getMessage(by: indexPath))
-
-        return cell
     }
 }
 
