@@ -15,6 +15,12 @@ class MessageCell: UITableViewCell {
     // MARK: - IBOutlets
     @IBOutlet weak var messageLabel: UILabel!
 
+    @IBOutlet weak var leadingInBubbleViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leadingOutBubbleViewConstraint: NSLayoutConstraint!
+
+    @IBOutlet weak var trailingInBubbleViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingOutBubbleViewConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var bubbleView: UIView! {
         didSet {
             bubbleView.layer.cornerRadius = 8
@@ -37,5 +43,12 @@ class MessageCell: UITableViewCell {
     // MARK: - Custom functions
     func configure(with model: Message) {
         messageLabel.text = model.text
+        bubbleView.backgroundColor = model.owned ? .cyan : .green
+        
+        leadingInBubbleViewConstraint.priority = UILayoutPriority(model.owned ? 750 : 1000)
+        leadingOutBubbleViewConstraint.priority = UILayoutPriority(model.owned ? 1000 : 750)
+
+        trailingInBubbleViewConstraint.priority = UILayoutPriority(model.owned ? 750 : 1000)
+        trailingOutBubbleViewConstraint.priority = UILayoutPriority(model.owned ? 1000 : 750)
     }
 }

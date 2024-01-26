@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1451D1E2B63AD8A00440E29 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1451D1D2B63AD8A00440E29 /* Sender.swift */; };
 		B16D99B12B62B40C00630A2B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16D99B02B62B40C00630A2B /* ChatViewController.swift */; };
 		B16D99B42B62B45600630A2B /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16D99B22B62B45600630A2B /* MessageCell.swift */; };
 		B16D99B52B62B45600630A2B /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B16D99B32B62B45600630A2B /* MessageCell.xib */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B1451D1D2B63AD8A00440E29 /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		B16D99B02B62B40C00630A2B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		B16D99B22B62B45600630A2B /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B16D99B32B62B45600630A2B /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				B1D045732B62AC1D0093ADAC /* Message.swift */,
+				B1451D1D2B63AD8A00440E29 /* Sender.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1D3D2C62B6264EA00BAC26D /* AppDelegate.swift in Sources */,
+				B1451D1E2B63AD8A00440E29 /* Sender.swift in Sources */,
 				B1D045742B62AC1E0093ADAC /* Message.swift in Sources */,
 				B1D045722B62AB9A0093ADAC /* ChatViewModel.swift in Sources */,
 				B16D99B12B62B40C00630A2B /* ChatViewController.swift in Sources */,

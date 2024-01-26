@@ -12,12 +12,15 @@ struct Message: Codable {
     let id: UUID
     let text: String
     let created: Date
-
+    let sender: Sender
+    let owned: Bool
 
     // MARK: - Initialization
-    init(id: UUID = UUID(), text: String, created: Date = Date()) {
+    init(id: UUID = UUID(), text: String, created: Date = Date(), sender: Sender = .me) {
         self.id = id
         self.text = text
         self.created = created
+        self.sender = sender
+        self.owned = sender.id == 0
     }
 }
