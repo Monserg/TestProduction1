@@ -46,12 +46,6 @@ class ChatViewController: UIViewController {
 
 
     // MARK: - Class functions
-    override func viewWillLayoutSubviews() {
-        super.updateViewConstraints()
-        
-        chatTableHeight?.constant = chatTableView.contentSize.height + 16
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -201,5 +195,23 @@ extension ChatViewController: UITableViewDelegate {
 
             return UIMenu(title: "Message Options", children: [messageIDAction, messageDateAction])
         }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: .zero)
+        headerView.isUserInteractionEnabled = false
+        headerView.backgroundColor = .clear
+
+        return headerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let diff = tableView.contentSize.height - tableView.bounds.height
+        
+        return diff > 0 ? 0 : -diff
     }
 }
